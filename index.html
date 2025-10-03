@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>张家口地点地图</title>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=521420b7757cf96bb4ecb217e0699ad8"></script>
+    <style>
+        #mapContainer {
+            width: 1000px;
+            height: 600px;
+            margin: 20px auto;
+            display: none;
+            border: 1px solid #eee;
+        }
+        #showMapBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 20px auto;
+            display: block;
+            cursor: pointer;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #showMapBtn:hover {
+            background: #c82333;
+        }
+        .info-content {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .info-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .info-content::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+        .info-content::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <button id="showMapBtn">点击显示张家口地图</button>
+    <div id="mapContainer"></div>
+
+    <script>
+        window.onload = function() {
+            var showMapBtn = document.getElementById('showMapBtn');
+            var mapContainer = document.getElementById('mapContainer');
+            var map = null;
+
+            showMapBtn.onclick = function() {
+                mapContainer.style.display = 'block';
+                if (!map) initMap();
+            };
+
+            function initMap() {
+                // 初始化地图
+                map = new AMap.Map('mapContainer', {
+                    zoom: 12,
+                    center: [114.8700, 40.8100],
+                    resizeEnable: true,
+                    scrollWheel: true
+                });
+
+                // 纯红色标记图标
+                var redMarkerIcon = new AMap.Icon({
+                    size: new AMap.Size(30, 38),
+                    image: 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png',
+                    imageSize: new AMap.Size(30, 38)
+                });
+
+                // 地点数据（视频标签添加class="info-video"，方便后续获取）
+                var markersData = [
+                    // 1. 张家口堡子里
+                    {
+                        position: [114.8685, 40.8220],
+                        title: "张家口堡子里",
+                        content: `
+                            <div class="info-content" style="width: 700px; padding: 10px; box-sizing: border-box;">
+                                <div style="margin-bottom: 15px;">
+                                    <h3 style="margin: 0 0 10px 0; color: #dc3545;">张家口堡子里</h3>
+                                    <p style="margin: 0; line-height: 1.6; font-size: 15px;">
+                                        作为张家口市的发祥地与城市“原点”，堡子里（当地读bǔ）承载着近600年的历史文脉，从明宣德年间建堡至今，700余处文物古迹、93处重点院落共同构成了“明清建筑博物馆”的鲜活底色。这里不仅是北方民居文化的活样本，更藏着社会主义核心价值观的历史基因——晋商在此开创的“诚信经营、童叟无欺”商道，是公民层面“诚信”价值观的千年传承；茶马古道上“互利互助、友善往来”的贸易传统，至今仍在街巷间留下“友善”的印记。如今，45处开放点位（含金融博物馆、抡才书院等）的保护开发，既让文物“活”起来，更让历史美德融入当代生活：游客在古院落中触摸晋商诚信故事，居民在修复后的街巷里守护文化根脉，这种“保护中传承、传承中发展”的实践，正是国家层面“文明”价值观的日常表达，也让“和谐”的社会氛围在历史与当代的交融中自然生长。
+                                    </p>
+                                </div>
+
+                                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                    <img src="1.1堡子里.jpg" style="flex: 1; height: 200px; object-fit: cover; border-radius: 6px;" alt="堡子里1" />
+                                    <img src="1.2堡子里.jpg" style="flex: 1; height: 200px; object-fit: cover; border-radius: 6px;" alt="堡子里2" />
+                                    <img src="1.3堡子里.jpg" style="flex: 1; height: 200px; object-fit: cover; border-radius: 6px;" alt="堡子里3" />
+                                    <img src="1.4堡子里.jpg" style="flex: 1; height: 200px; object-fit: cover; border-radius: 6px;" alt="堡子里4" />
+                                </div>
+
+                                <div>
+                                    <p style="margin: 0 0 8px 0; font-weight: bold; font-size: 15px;">堡子里介绍视频</p>
+                                    <!-- 视频添加class="info-video" -->
+                                    <video class="info-video" controls style="width: 100%; height: 300px; object-fit: cover; border-radius: 6px;">
+                                        <source src="1堡子里.mp4" type="video/mp4">
+                                        您的浏览器不支持视频播放
+                                    </video>
+                                </div>
+                            </div>
+                        `
+                    },
+
+                    // 2. 大境门
+                    {
+                        position: [114.8578, 40.8365],
+                        title: "大境门",
+                        content: `
+                            <div class="info-content" style="width: 700px; padding: 10px; box-sizing: border-box;">
+                                <div style="margin-bottom: 15px;">
+                                    <h3 style="margin: 0 0 10px 0; color: #dc3545;">大境门</h3>
+                                    <p style="margin: 0; line-height: 1.6; font-size: 15px;">
+                                        作为万里长城四大名关之一，大境门以“万里长城第一门”的独特身份，成为社会主义核心价值观的生动载体。不同于其他关隘的“军事属性”，这里从明朝隆庆年间起便是“茶马互市”的边贸枢纽，蒙古草原的皮毛、欧洲的银器与中原的丝绸、茶叶在此公平交易，“童叟无欺、等价交换”的规则，正是社会层面“公正”价值观的古代实践。而“境门”二字蕴含的“开放融合”内核，更见证了多民族文化的共生——如今，门楣上“大好河山”的苍劲题字，让每一位参观者都能直观感受对祖国山河的热爱，这种“驻足即见、心生共鸣”的爱国情感，将公民层面“爱国”从抽象概念转化为具体体验。作为草原丝绸之路张库大道的起点，大境门至今仍在诉说：“和谐”不是口号，而是各民族、各文化在交流中彼此成就的日常。
+                                    </p>
+                                </div>
+
+                                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                    <img src="2.1大境门.jpg" style="flex: 1; height: 200px; object-fit: cover; border-radius: 6px;" alt="大境门1" />
+                                    <img src="2.2大境门.jpg" style="flex: 1; height: 200px; object-fit: cover; border-radius: 6px;" alt="大境门2" />
+                                    <img src="2.3大境门.jpg" style="flex: 1; height: 200px; object-fit: cover; border-radius: 6px;" alt="大境门3" />
+                                </div>
+
+                                <div>
+                                    <p style="margin: 0 0 8px 0; font-weight: bold; font-size: 15px;">大境门介绍视频</p>
+                                    <!-- 视频添加class="info-video" -->
+                                    <video class="info-video" controls style="width: 100%; height: 300px; object-fit: cover; border-radius: 6px;">
+                                        <source src="2大境门.mp4" type="video/mp4">
+                                        您的浏览器不支持视频播放
+                                    </video>
+                                </div>
+                            </div>
+                        `
+                    },
+
+                    // 3. 张家口地质博物馆
+                    {
+                        position: [114.8875, 40.7960],
+                        title: "张家口地质博物馆",
+                        content: `
+                            <div class="info-content" style="width: 700px; padding: 10px; box-sizing: border-box;">
+                                <div style="margin-bottom: 15px;">
+                                    <h3 style="margin: 0 0 10px 0; color: #dc3545;">张家口地质博物馆</h3>
+                                    <p style="margin: 0; line-height: 1.6; font-size: 15px;">
+                                        这座2019年开放的科普阵地，以“免费开放、全民共享”的姿态，将社会主义核心价值观融入每一次知识传递。馆内三至五层的常规展厅里，恐龙化石复原模型讲述地球演化，矿物标本展现自然奥秘；一层的临时展览、二层的社会教育课程，为青少年、老年人、普通市民提供无差别的学习机会——“无论身份、不分年龄，都能平等获取科学知识”，这正是社会层面“平等”价值观的具象化。工作人员坚守岗位，用专业讲解让深奥的地质知识变得易懂，周末为孩子设计科普手工课、节假日开展公益讲座，这份“用心做好每一次服务”的态度，是公民层面“敬业”的生动体现。作为“河北省科普示范基地”，博物馆不仅传播科学精神，更以“让科学走进生活”的实践，为国家层面“文明”建设注入动力：当市民带着孩子观察矿物、老人驻足恐龙雕塑前感叹自然神奇，“学科学、爱科学”便成了文明生活的日常。
+                                    </p>
+                                </div>
+
+                                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                                    <img src="3.1博物馆.jpg" style="flex: 1; height: 200px; object-fit: cover; border-radius: 6px;" alt="地质博物馆1" />
+                                    <img src="3.2博物馆.jpg" style="flex: 1; height: 200px; object-fit: cover; border-radius: 6px;" alt="地质博物馆2" />
+                                </div>
+
+                                <div>
+                                    <p style="margin: 0 0 8px 0; font-weight: bold; font-size: 15px;">地质博物馆介绍视频</p>
+                                    <!-- 视频添加class="info-video" -->
+                                    <video class="info-video" controls style="width: 100%; height: 300px; object-fit: cover; border-radius: 6px;">
+                                        <source src="3博物馆.mp4" type="video/mp4">
+                                        您的浏览器不支持视频播放
+                                    </video>
+                                </div>
+                            </div>
+                        `
+                    },
+
+                    // 4. 张家口市中级人民法院
+                    {
+                        position: [114.8920, 40.8080],
+                        title: "张家口市中级人民法院",
+                        content: `
+                            <div class="info-content" style="width: 700px; padding: 10px; box-sizing: border-box;">
+                                <div style="margin-bottom: 15px;">
+                                    <h3 style="margin: 0 0 10px 0; color: #dc3545;">张家口市中级人民法院</h3>
+                                    <p style="margin: 0; line-height: 1.6; font-size: 15px;">
+                                        从1949年华北人民法院下辖的地方司法机构，到如今拥有28个内设机构、17个基层法院的规范化体系，张家口市中级人民法院的发展，是我国“法治”建设的微观缩影。全院1277名在编干警中，469名入额法官始终坚守“法律面前人人平等”的原则：无论是民事纠纷的调解，还是刑事案件的审理，都以“事实为依据、法律为准绳”，让每一起案件都经得起检验——这种“不让公平缺席”的坚守，正是社会层面“公正”“法治”价值观的落地实践。干警们扎根岗位，有的加班梳理案卷、有的深入社区普法、有的耐心解答群众咨询，这份“履职尽责、不负使命”的担当，是公民层面“敬业”的真实写照。如今，法院通过优化诉讼服务、开展法治宣传，让“遇事找法、解决问题靠法”成为群众共识，既维护了社会秩序，更以稳定的法治环境，为国家“富强”“和谐”的发展大局筑牢了制度根基。
+                                    </p>
+                                </div>
+
+                                <div style="margin-bottom: 15px; height: 200px;">
+                                    <img src="4.1.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px;" alt="中级人民法院" />
+                                </div>
+
+                                <div>
+                                    <p style="margin: 0 0 8px 0; font-weight: bold; font-size: 15px;">法院相关视频</p>
+                                    <!-- 视频添加class="info-video" -->
+                                    <video class="info-video" controls style="width: 100%; height: 300px; object-fit: cover; border-radius: 6px;">
+                                        <source src="4法院.mp4" type="video/mp4">
+                                        您的浏览器不支持视频播放
+                                    </video>
+                                </div>
+                            </div>
+                        `
+                    }
+                ];
+
+                // 循环创建标记点
+                markersData.forEach(function(item) {
+                    var marker = new AMap.Marker({
+                        position: item.position,
+                        title: item.title,
+                        map: map,
+                        icon: redMarkerIcon
+                    });
+
+                    var infoWindow = new AMap.InfoWindow({
+                        content: item.content,
+                        offset: new AMap.Pixel(0, -40)
+                    });
+
+                    // 点击标记显示窗口，禁用地图滚轮
+                    marker.on('click', function() {
+                        infoWindow.open(map, marker.getPosition());
+                        map.setStatus({ scrollWheel: false });
+                    });
+
+                    // 关闭窗口：恢复滚轮缩放 + 暂停当前窗口视频
+                    infoWindow.on('close', function() {
+                        // 1. 恢复地图滚轮缩放
+                        map.setStatus({ scrollWheel: true });
+
+                        // 2. 获取当前信息窗口的容器DOM，找到视频并暂停
+                        var windowContainer = infoWindow.getContainer(); // 获取窗口容器
+                        var videoElement = windowContainer.querySelector('.info-video'); // 找到视频元素
+                        if (videoElement) { // 确保视频元素存在
+                            videoElement.pause(); // 暂停视频
+                        }
+                    });
+                });
+
+                // 添加地图控件
+                map.addControl(new AMap.Zoom());
+                map.addControl(new AMap.Scale());
+            }
+        };
+    </script>
+</body>
+</html>
